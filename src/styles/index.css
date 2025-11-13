@@ -1,0 +1,4 @@
+/* Styles handled by styled-components and GlobalStyles.js */
+
+/* ensure tiptap content isn't constrained */
+.prose { max-width: none; }
