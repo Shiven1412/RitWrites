@@ -25,6 +25,11 @@ const TabButtons = styled.div`
   gap: 1rem;
   border-bottom: 3px solid #191970;
   margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+
+  @media (max-width: 480px) {
+    gap: 0.5rem;
+  }
 `;
 
 const TabButton = styled.button`
@@ -91,6 +96,12 @@ const ItemCard = styled.li`
     box-shadow: 0 8px 16px rgba(25, 25, 112, 0.2);
     transform: translateY(-4px);
   }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
 `;
 
 const ItemInfo = styled.div`
@@ -112,6 +123,12 @@ const ItemDate = styled.div`
 const ItemActions = styled.div`
   display: flex;
   gap: 1rem;
+
+  @media (max-width: 768px) {
+    justify-content: flex-start;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
 `;
 
 const ActionLink = styled(Link)`

@@ -1,6 +1,15 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
+  :root{
+    --color-bg: #fafafa;
+    --color-text: #333333;
+    --color-primary: #191970;
+    --color-accent: #d4af37;
+    --container-max: 72rem;
+    --gap: 1rem;
+  }
+
   * {
     margin: 0;
     padding: 0;
@@ -18,8 +27,8 @@ const GlobalStyles = createGlobalStyle`
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #fafafa;
-    color: #333333;
+    background-color: var(--color-bg);
+    color: var(--color-text);
     font-size: 1rem;
     line-height: 1.6;
     font-weight: 400;
@@ -51,7 +60,7 @@ const GlobalStyles = createGlobalStyle`
   h1, h2, h3, h4, h5, h6 {
     line-height: 1.3;
     font-weight: 600;
-    color: #191970;
+    color: var(--color-primary);
   }
 
   h1 {
@@ -68,6 +77,18 @@ const GlobalStyles = createGlobalStyle`
 
   p {
     font-weight: 400;
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 1024px) {
+    :root { --container-max: 56rem; }
+  }
+
+  @media (max-width: 768px) {
+    body { font-size: 0.95rem; }
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.125rem; }
+    h3 { font-size: 1rem; }
   }
 `;
 
