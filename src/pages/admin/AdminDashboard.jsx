@@ -1,213 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import { supabase } from '../../lib/supabaseClient';
-
-const Container = styled.div`
-  max-width: 72rem;
-  margin: 0 auto;
-  padding: 2rem;
-`;
-
-const Title = styled.h1`
-  font-size: 1.75rem;
-  font-weight: 600;
-  color: #191970;
-  margin-bottom: 1.5rem;
-`;
-
-const TabContainer = styled.div`
-  margin-bottom: 2rem;
-`;
-
-const TabButtons = styled.div`
-  display: flex;
-  gap: 1rem;
-  border-bottom: 3px solid #191970;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
-
-  @media (max-width: 480px) {
-    gap: 0.5rem;
-  }
-`;
-
-const TabButton = styled.button`
-  padding: 0.75rem 1.5rem;
-  background-color: ${props => props.active ? '#191970' : '#f5f5dc'};
-  color: ${props => props.active ? '#f5f5dc' : '#191970'};
-  border: 2px solid #191970;
-  border-bottom: none;
-  border-radius: 0.5rem 0.5rem 0 0;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: #191970;
-    color: #f5f5dc;
-  }
-`;
-
-const ActionBar = styled.div`
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-`;
-
-const NewButton = styled(Link)`
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background-color: #191970;
-  color: #f5f5dc;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  font-size: 1rem;
-  text-decoration: none;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: #0a0a3a;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(25, 25, 112, 0.3);
-  }
-`;
-
-const ItemList = styled.ul`
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const ItemCard = styled.li`
-  padding: 1.5rem;
-  border: 2px solid #191970;
-  border-radius: 0.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #ffffff;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(25, 25, 112, 0.1);
-
-  &:hover {
-    box-shadow: 0 8px 16px rgba(25, 25, 112, 0.2);
-    transform: translateY(-4px);
-  }
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.75rem;
-  }
-`;
-
-const ItemInfo = styled.div`
-  flex: 1;
-`;
-
-const ItemTitle = styled.div`
-  font-weight: 600;
-  color: #191970;
-  font-size: 1.25rem;
-`;
-
-const ItemDate = styled.div`
-  font-size: 0.95rem;
-  color: #999999;
-  margin-top: 0.5rem;
-`;
-
-const ItemActions = styled.div`
-  display: flex;
-  gap: 1rem;
-
-  @media (max-width: 768px) {
-    justify-content: flex-start;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-`;
-
-const ActionLink = styled(Link)`
-  text-decoration: underline;
-  color: #191970;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-
-  &:hover {
-    color: #d4af37;
-  }
-`;
-
-const DeleteButton = styled.button`
-  padding: 0.5rem 1rem;
-  background-color: #dc2626;
-  color: #ffffff;
-  border-radius: 0.375rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: #b91c1c;
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
-`;
-
-const EditButton = styled(Link)`
-  padding: 0.5rem 1rem;
-  background-color: #3b82f6;
-  color: #ffffff;
-  border-radius: 0.375rem;
-  font-size: 1rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: #2563eb;
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
-`;
-
-const EmptyState = styled.div`
-  text-align: center;
-  padding: 3rem;
-  color: #999999;
-  font-size: 1.1rem;
-`;
-
-const SettingsLink = styled(Link)`
-  display: block;
-  text-align: center;
-  padding: 2rem;
-  background-color: #ffffff;
-  border: 2px solid #191970;
-  border-radius: 0.5rem;
-  color: #191970;
-  font-weight: 600;
-  font-size: 1.1rem;
-  text-decoration: none;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: #191970;
-    color: #f5f5dc;
-    transform: translateY(-2px);
-  }
-`;
+import './AdminDashboard.css';
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('posts');
@@ -243,80 +37,80 @@ export default function AdminDashboard() {
   }
 
   return (
-    <Container>
-      <Title>Admin Dashboard</Title>
+    <div className="admin-container">
+      <h1 className="admin-title">Admin Dashboard</h1>
 
-      <TabContainer>
-        <TabButtons>
-          <TabButton active={activeTab === 'posts'} onClick={() => setActiveTab('posts')}>
+      <div className="admin-tab-container">
+        <div className="admin-tab-buttons">
+          <button className={`admin-tab-button ${activeTab === 'posts' ? 'active' : ''}`} onClick={() => setActiveTab('posts')}>
             📝 Blog Posts
-          </TabButton>
-          <TabButton active={activeTab === 'portfolio'} onClick={() => setActiveTab('portfolio')}>
+          </button>
+          <button className={`admin-tab-button ${activeTab === 'portfolio' ? 'active' : ''}`} onClick={() => setActiveTab('portfolio')}>
             🎨 Portfolio
-          </TabButton>
-          <TabButton active={activeTab === 'settings'} onClick={() => setActiveTab('settings')}>
+          </button>
+          <button className={`admin-tab-button ${activeTab === 'settings' ? 'active' : ''}`} onClick={() => setActiveTab('settings')}>
             ⚙️ Settings
-          </TabButton>
-        </TabButtons>
+          </button>
+        </div>
 
         {activeTab === 'posts' && (
           <>
-            <ActionBar>
-              <NewButton to="/admin/new">+ New Post</NewButton>
-            </ActionBar>
+            <div className="admin-action-bar">
+              <Link to="/admin/new" className="admin-new-button">+ New Post</Link>
+            </div>
             {posts.length === 0 ? (
-              <EmptyState>No blog posts yet. Create your first post!</EmptyState>
+              <div className="admin-empty-state">No blog posts yet. Create your first post!</div>
             ) : (
-              <ItemList>
+              <ul className="admin-item-list">
                 {posts.map(p => (
-                  <ItemCard key={p.id}>
-                    <ItemInfo>
-                      <ItemTitle>{p.title}</ItemTitle>
-                      <ItemDate>{new Date(p.created_at).toLocaleString()}</ItemDate>
-                    </ItemInfo>
-                    <ItemActions>
-                      <ActionLink to={`/post/${p.slug}`}>View</ActionLink>
-                      <DeleteButton onClick={() => deletePost(p.id)}>Delete</DeleteButton>
-                    </ItemActions>
-                  </ItemCard>
+                  <li key={p.id} className="admin-item-card">
+                    <div className="admin-item-info">
+                      <div className="admin-item-title">{p.title}</div>
+                      <div className="admin-item-date">{new Date(p.created_at).toLocaleString()}</div>
+                    </div>
+                    <div className="admin-item-actions">
+                      <Link to={`/post/${p.slug}`} className="admin-action-link">View</Link>
+                      <button className="admin-delete-button" onClick={() => deletePost(p.id)}>Delete</button>
+                    </div>
+                  </li>
                 ))}
-              </ItemList>
+              </ul>
             )}
           </>
         )}
 
         {activeTab === 'portfolio' && (
           <>
-            <ActionBar>
-              <NewButton to="/admin/portfolio/new">+ New Project</NewButton>
-            </ActionBar>
+            <div className="admin-action-bar">
+              <Link to="/admin/portfolio/new" className="admin-new-button">+ New Project</Link>
+            </div>
             {portfolio.length === 0 ? (
-              <EmptyState>No portfolio items yet. Showcase your work!</EmptyState>
+              <div className="admin-empty-state">No portfolio items yet. Showcase your work!</div>
             ) : (
-              <ItemList>
+              <ul className="admin-item-list">
                 {portfolio.map(p => (
-                  <ItemCard key={p.id}>
-                    <ItemInfo>
-                      <ItemTitle>{p.title}</ItemTitle>
-                      <ItemDate>{new Date(p.created_at).toLocaleString()}</ItemDate>
-                    </ItemInfo>
-                    <ItemActions>
-                      <EditButton to={`/admin/portfolio/${p.id}`}>Edit</EditButton>
-                      <DeleteButton onClick={() => deletePortfolio(p.id)}>Delete</DeleteButton>
-                    </ItemActions>
-                  </ItemCard>
+                  <li key={p.id} className="admin-item-card">
+                    <div className="admin-item-info">
+                      <div className="admin-item-title">{p.title}</div>
+                      <div className="admin-item-date">{new Date(p.created_at).toLocaleString()}</div>
+                    </div>
+                    <div className="admin-item-actions">
+                      <Link to={`/admin/portfolio/${p.id}`} className="admin-edit-button">Edit</Link>
+                      <button className="admin-delete-button" onClick={() => deletePortfolio(p.id)}>Delete</button>
+                    </div>
+                  </li>
                 ))}
-              </ItemList>
+              </ul>
             )}
           </>
         )}
 
         {activeTab === 'settings' && (
-          <SettingsLink to="/admin/settings">
+          <Link to="/admin/settings" className="admin-settings-link">
             Go to Settings →
-          </SettingsLink>
+          </Link>
         )}
-      </TabContainer>
-    </Container>
+      </div>
+    </div>
   );
 }

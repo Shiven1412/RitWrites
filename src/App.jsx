@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import styled from 'styled-components';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { supabase } from './lib/supabaseClient';
+import { PageTransition } from './components/PageTransition';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
+import Blog from './pages/Blog';
 import PostPage from './pages/PostPage';
 import Portfolio from './pages/Portfolio';
 import Contact from './pages/Contact';
@@ -14,12 +15,7 @@ import AdminEditor from './pages/admin/AdminEditor';
 import PortfolioEditor from './pages/admin/PortfolioEditor';
 import AdminSettings from './pages/admin/AdminSettings';
 import ProtectedRoute from './components/ProtectedRoute';
-
-const AppContainer = styled.div`
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-`;
+import './App.css';
 
 export default function App() {
   const [session, setSession] = useState(null);
@@ -71,23 +67,34 @@ export default function App() {
 
   return (
     <Router>
-      <AppContainer>
+      <div className="app-container">
         <Navbar user={session} profile={profile} siteSettings={siteSettings} />
-        <Routes>
-          <Route path="/" element={<Home supabase={supabase} />} />
-          <Route path="/post/:slug" element={<PostPage supabase={supabase} user={session} />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/logout" element={<Logout />} />
-
-          <Route path="/admin" element={<ProtectedRoute profile={profile}><AdminDashboard supabase={supabase} /></ProtectedRoute>} />
-          <Route path="/admin/new" element={<ProtectedRoute profile={profile}><AdminEditor user={session} profile={profile} /></ProtectedRoute>} />
-          <Route path="/admin/portfolio/new" element={<ProtectedRoute profile={profile}><PortfolioEditor profile={profile} /></ProtectedRoute>} />
-          <Route path="/admin/portfolio/:id" element={<ProtectedRoute profile={profile}><PortfolioEditor profile={profile} /></ProtectedRoute>} />
-          <Route path="/admin/settings" element={<ProtectedRoute profile={profile}><AdminSettings profile={profile} /></ProtectedRoute>} />
-        </Routes>
-      </AppContainer>
+        <RouteWrapper supabase={supabase} session={session} profile={profile} />
+      </div>
     </Router>
+  );
+}
+
+function RouteWrapper({ supabase, session, profile }) {
+  const location = useLocation();
+
+  return (
+    <PageTransition pageKey={location.pathname} transitionType="flip">
+      <Routes>
+        <Route path="/" element={<Home supabase={supabase} />} />
+  <Route path="/blog" element={<Blog supabase={supabase} />} />
+        <Route path="/post/:slug" element={<PostPage supabase={supabase} user={session} />} />
+        <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<Logout />} />
+
+        <Route path="/admin" element={<ProtectedRoute profile={profile}><AdminDashboard supabase={supabase} /></ProtectedRoute>} />
+        <Route path="/admin/new" element={<ProtectedRoute profile={profile}><AdminEditor user={session} profile={profile} /></ProtectedRoute>} />
+        <Route path="/admin/portfolio/new" element={<ProtectedRoute profile={profile}><PortfolioEditor profile={profile} /></ProtectedRoute>} />
+        <Route path="/admin/portfolio/:id" element={<ProtectedRoute profile={profile}><PortfolioEditor profile={profile} /></ProtectedRoute>} />
+        <Route path="/admin/settings" element={<ProtectedRoute profile={profile}><AdminSettings profile={profile} /></ProtectedRoute>} />
+      </Routes>
+    </PageTransition>
   );
 }

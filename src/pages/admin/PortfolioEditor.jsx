@@ -1,181 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import { supabase } from '../../lib/supabaseClient';
-
-const Container = styled.div`
-  max-width: 56rem;
-  margin: 0 auto;
-  padding: 2rem;
-`;
-
-const Title = styled.h1`
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #191970;
-  margin-bottom: 1.5rem;
-`;
-
-const FormGroup = styled.div`
-  margin-top: 1.5rem;
-`;
-
-const Label = styled.label`
-  display: block;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #191970;
-  margin-bottom: 0.5rem;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 0.75rem;
-  border: 2px solid #191970;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  background-color: #ffffff;
-  color: #191970;
-
-  &::placeholder {
-    color: #cccccc;
-  }
-
-  &:focus {
-    outline: none;
-    border-color: #d4af37;
-    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
-  }
-`;
-
-const TextArea = styled.textarea`
-  width: 100%;
-  padding: 0.75rem;
-  border: 2px solid #191970;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  font-family: inherit;
-  resize: vertical;
-  min-height: 120px;
-  transition: all 0.3s ease;
-  background-color: #ffffff;
-  color: #191970;
-
-  &::placeholder {
-    color: #cccccc;
-  }
-
-  &:focus {
-    outline: none;
-    border-color: #d4af37;
-    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
-  }
-`;
-
-const ImagePreview = styled.div`
-  margin-top: 1rem;
-  border: 2px dashed #191970;
-  border-radius: 0.5rem;
-  padding: 1rem;
-  text-align: center;
-
-  img {
-    max-width: 100%;
-    max-height: 300px;
-    border-radius: 0.375rem;
-    margin-top: 1rem;
-  }
-`;
-
-const FileInput = styled.input`
-  display: none;
-`;
-
-const UploadButton = styled.button`
-  padding: 0.75rem 1.5rem;
-  background-color: #191970;
-  color: #f5f5dc;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  border: 2px solid #191970;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0a0a3a;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(25, 25, 112, 0.3);
-  }
-`;
-
-const ButtonGroup = styled.div`
-  display: flex;
-  gap: 1rem;
-  margin-top: 2rem;
-`;
-
-const SaveButton = styled.button`
-  flex: 1;
-  padding: 0.75rem 1.5rem;
-  background-color: #16a34a;
-  color: #ffffff;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  font-size: 1.1rem;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: #15803d;
-    transform: translateY(-2px);
-  }
-
-  &:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-`;
-
-const CancelButton = styled.button`
-  flex: 1;
-  padding: 0.75rem 1.5rem;
-  background-color: #666666;
-  color: #ffffff;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  font-size: 1.1rem;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: #555555;
-    transform: translateY(-2px);
-  }
-`;
-
-const ErrorMessage = styled.div`
-  color: #dc2626;
-  background-color: #fee2e2;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin-top: 1rem;
-  border: 1px solid #dc2626;
-  font-size: 1rem;
-`;
-
-const SuccessMessage = styled.div`
-  color: #16a34a;
-  background-color: #dcfce7;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin-top: 1rem;
-  border: 1px solid #16a34a;
-  font-size: 1rem;
-`;
+import './PortfolioEditor.css';
 
 export default function PortfolioEditor({ profile }) {
   const navigate = useNavigate();
@@ -309,12 +135,13 @@ export default function PortfolioEditor({ profile }) {
   if (!profile?.is_admin) return null;
 
   return (
-    <Container>
-      <Title>{id ? 'Edit Project' : 'Create New Project'}</Title>
+    <div className="portfolio-editor-container">
+      <h1 className="portfolio-editor-title">{id ? 'Edit Project' : 'Create New Project'}</h1>
 
-      <FormGroup>
-        <Label>Project Title</Label>
-        <Input
+      <div className="portfolio-editor-form-group">
+        <label className="portfolio-editor-label">Project Title</label>
+        <input
+          className="portfolio-editor-input"
           value={title}
           onChange={(e) => {
             setTitle(e.target.value);
@@ -322,11 +149,12 @@ export default function PortfolioEditor({ profile }) {
           }}
           placeholder="Enter project title..."
         />
-      </FormGroup>
+      </div>
 
-      <FormGroup>
-        <Label>Description</Label>
-        <TextArea
+      <div className="portfolio-editor-form-group">
+        <label className="portfolio-editor-label">Description</label>
+        <textarea
+          className="portfolio-editor-textarea"
           value={description}
           onChange={(e) => {
             setDescription(e.target.value);
@@ -334,21 +162,22 @@ export default function PortfolioEditor({ profile }) {
           }}
           placeholder="Describe your project..."
         />
-      </FormGroup>
+      </div>
 
-      <FormGroup>
-        <Label>Project Link (Optional)</Label>
-        <Input
+      <div className="portfolio-editor-form-group">
+        <label className="portfolio-editor-label">Project Link (Optional)</label>
+        <input
+          className="portfolio-editor-input"
           type="url"
           value={link}
           onChange={(e) => setLink(e.target.value)}
           placeholder="https://example.com"
         />
-      </FormGroup>
+      </div>
 
-      <FormGroup>
-        <Label>Project Image</Label>
-        <ImagePreview>
+      <div className="portfolio-editor-form-group">
+        <label className="portfolio-editor-label">Project Image</label>
+        <div className="portfolio-editor-image-preview">
           {imageUrl ? (
             <>
               <p>Current Image:</p>
@@ -357,29 +186,30 @@ export default function PortfolioEditor({ profile }) {
           ) : (
             <p>No image yet</p>
           )}
-        </ImagePreview>
-        <UploadButton onClick={onClickUpload} style={{ marginTop: '1rem' }}>
+        </div>
+        <button className="portfolio-editor-upload-button" onClick={onClickUpload}>
           📤 Upload Image
-        </UploadButton>
-        <FileInput
+        </button>
+        <input
+          className="portfolio-editor-file-input"
           ref={fileInputRef}
           type="file"
           accept="image/*"
           onChange={onImageChange}
         />
-      </FormGroup>
+      </div>
 
-      {error && <ErrorMessage>{error}</ErrorMessage>}
-      {message && <SuccessMessage>{message}</SuccessMessage>}
+      {error && <div className="portfolio-editor-error-message">{error}</div>}
+      {message && <div className="portfolio-editor-success-message">{message}</div>}
 
-      <ButtonGroup>
-        <SaveButton onClick={save} disabled={saving}>
+      <div className="portfolio-editor-button-group">
+        <button className="portfolio-editor-save-button" onClick={save} disabled={saving}>
           {saving ? 'Saving...' : 'Save Project'}
-        </SaveButton>
-        <CancelButton onClick={() => navigate('/admin')}>
+        </button>
+        <button className="portfolio-editor-cancel-button" onClick={() => navigate('/admin')}>
           Cancel
-        </CancelButton>
-      </ButtonGroup>
-    </Container>
+        </button>
+      </div>
+    </div>
   );
 }

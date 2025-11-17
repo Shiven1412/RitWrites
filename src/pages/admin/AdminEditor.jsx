@@ -4,210 +4,9 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
-import styled from 'styled-components';
 import makeSlug from '../../utils/slugify';
 import { supabase } from '../../lib/supabaseClient';
-
-const Container = styled.div`
-  max-width: 56rem;
-  margin: 0 auto;
-  padding: 2rem;
-`;
-
-const Title = styled.h1`
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #191970;
-  margin-bottom: 1.5rem;
-`;
-
-const FormGroup = styled.div`
-  margin-top: 1.5rem;
-`;
-
-const Label = styled.label`
-  display: block;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #191970;
-  margin-bottom: 0.5rem;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 0.75rem;
-  border: 2px solid #191970;
-  border-radius: 0.5rem;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-  background-color: #ffffff;
-  color: #191970;
-
-  &::placeholder {
-    color: #cccccc;
-  }
-
-  &:focus {
-    outline: none;
-    border-color: #d4af37;
-    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
-  }
-`;
-
-const EditorContainer = styled.div`
-  margin-top: 1.5rem;
-  border: 2px solid #191970;
-  border-radius: 0.5rem;
-  background-color: #ffffff;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(25, 25, 112, 0.1);
-`;
-
-const ToolBar = styled.div`
-  padding: 1rem;
-  border-bottom: 2px solid #191970;
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  background-color: #f5f5dc;
-`;
-
-const ToolButton = styled.button`
-  padding: 0.6rem 1rem;
-  border: 2px solid #191970;
-  border-radius: 0.375rem;
-  background-color: #ffffff;
-  color: #191970;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: #191970;
-    color: #f5f5dc;
-    transform: translateY(-2px);
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
-`;
-
-const EditorContentArea = styled.div`
-  padding: 1.5rem;
-  min-height: 24rem;
-  background-color: #ffffff;
-
-  .tiptap {
-    outline: none;
-    font-size: 1.1rem;
-    color: #191970;
-    line-height: 1.8;
-  }
-
-  .tiptap p {
-    margin: 1rem 0;
-  }
-
-  .tiptap p.is-editor-empty:first-child::before {
-    content: attr(data-placeholder);
-    float: left;
-    color: #cccccc;
-    pointer-events: none;
-    height: 0;
-    font-size: 1.1rem;
-  }
-
-  .tiptap h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin: 1.5rem 0 0.75rem 0;
-  }
-
-  .tiptap h2 {
-    font-size: 1.75rem;
-    font-weight: bold;
-    margin: 1.5rem 0 0.75rem 0;
-  }
-
-  .tiptap h3 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 1.25rem 0 0.5rem 0;
-  }
-
-  .tiptap ul {
-    list-style: disc;
-    margin: 1rem 0 1rem 2rem;
-  }
-
-  .tiptap li {
-    margin: 0.5rem 0;
-  }
-
-  .tiptap img {
-    max-width: 100%;
-    height: auto;
-    margin: 1.5rem 0;
-    border-radius: 0.5rem;
-    border: 2px solid #191970;
-  }
-`;
-
-const HiddenInput = styled.input`
-  display: none;
-`;
-
-const ActionGroup = styled.div`
-  margin-top: 2rem;
-`;
-
-const SaveButton = styled.button`
-  padding: 0.75rem 1.5rem;
-  background-color: #191970;
-  color: #f5f5dc;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-  border: 2px solid #191970;
-
-  &:hover:not(:disabled) {
-    background-color: #0a0a3a;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(25, 25, 112, 0.3);
-  }
-
-  &:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-
-  &:active:not(:disabled) {
-    transform: scale(0.98);
-  }
-`;
-
-const ErrorMessage = styled.div`
-  color: #dc2626;
-  background-color: #fee2e2;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin-top: 1rem;
-  border: 1px solid #dc2626;
-  font-size: 1rem;
-`;
-
-const SuccessMessage = styled.div`
-  color: #16a34a;
-  background-color: #dcfce7;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin-top: 1rem;
-  border: 1px solid #16a34a;
-  font-size: 1rem;
-`;
+import './AdminEditor.css';
 
 export default function AdminEditor({ user, profile }) {
   const navigate = useNavigate();
@@ -329,12 +128,13 @@ export default function AdminEditor({ user, profile }) {
   if (!profile?.is_admin) return null;
 
   return (
-    <Container>
-      <Title>Create New Post</Title>
+    <div className="admin-editor-container">
+      <h1 className="admin-editor-title">Create New Post</h1>
 
-      <FormGroup>
-        <Label>Post Title</Label>
-        <Input
+      <div className="admin-editor-form-group">
+        <label className="admin-editor-label">Post Title</label>
+        <input
+          className="admin-editor-input"
           value={title}
           onChange={(e) => {
             setTitle(e.target.value);
@@ -342,34 +142,38 @@ export default function AdminEditor({ user, profile }) {
           }}
           placeholder="Enter post title..."
         />
-      </FormGroup>
+      </div>
 
-      <FormGroup>
-        <Label>Post Content</Label>
-        <EditorContainer>
-          <ToolBar>
-            <ToolButton
+      <div className="admin-editor-form-group">
+        <label className="admin-editor-label">Post Content</label>
+        <div className="admin-editor-container-box">
+          <div className="admin-editor-toolbar">
+            <button
+              className="admin-editor-tool-button"
               type="button"
               onClick={() => editor?.chain().focus().toggleBold().run()}
               title="Bold (Ctrl+B)"
             >
               <strong>B</strong>
-            </ToolButton>
-            <ToolButton
+            </button>
+            <button
+              className="admin-editor-tool-button"
               type="button"
               onClick={() => editor?.chain().focus().toggleItalic().run()}
               title="Italic (Ctrl+I)"
             >
               <em>I</em>
-            </ToolButton>
-            <ToolButton
+            </button>
+            <button
+              className="admin-editor-tool-button"
               type="button"
               onClick={() => editor?.chain().focus().toggleBulletList().run()}
               title="Bullet List"
             >
               • List
-            </ToolButton>
-            <ToolButton
+            </button>
+            <button
+              className="admin-editor-tool-button"
               type="button"
               onClick={() =>
                 editor?.chain().focus().toggleHeading({ level: 2 }).run()
@@ -377,32 +181,33 @@ export default function AdminEditor({ user, profile }) {
               title="Heading 2"
             >
               H2
-            </ToolButton>
-            <ToolButton type="button" onClick={onClickImage} title="Insert Image">
+            </button>
+            <button className="admin-editor-tool-button" type="button" onClick={onClickImage} title="Insert Image">
               🖼️ Image
-            </ToolButton>
-            <HiddenInput
+            </button>
+            <input
+              className="admin-editor-hidden-input"
               ref={fileInputRef}
               type="file"
               accept="image/*"
               onChange={onImageChange}
             />
-          </ToolBar>
+          </div>
 
-          <EditorContentArea>
+          <div className="admin-editor-content-area">
             <EditorContent editor={editor} />
-          </EditorContentArea>
-        </EditorContainer>
-      </FormGroup>
+          </div>
+        </div>
+      </div>
 
-      {error && <ErrorMessage>{error}</ErrorMessage>}
-      {message && <SuccessMessage>{message}</SuccessMessage>}
+      {error && <div className="admin-editor-error-message">{error}</div>}
+      {message && <div className="admin-editor-success-message">{message}</div>}
 
-      <ActionGroup>
-        <SaveButton onClick={savePost} disabled={saving}>
+      <div className="admin-editor-action-group">
+        <button className="admin-editor-save-button" onClick={savePost} disabled={saving}>
           {saving ? '💾 Saving...' : '✓ Save Post'}
-        </SaveButton>
-      </ActionGroup>
-    </Container>
+        </button>
+      </div>
+    </div>
   );
 }

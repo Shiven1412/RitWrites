@@ -1,0 +1,12 @@
+.logout-container {
+  max-width: 28rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.logout-message {
+  font-size: 1rem;
+  color: var(--muted-foreground);
+  margin-top: 1rem;
+}
