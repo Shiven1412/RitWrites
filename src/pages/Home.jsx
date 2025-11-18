@@ -11,7 +11,7 @@ export default function Home({ supabase }) {
   const [touchEndY, setTouchEndY] = useState(null);
   const navigateTo = '/blog';
   const navigate = useNavigate();
-  const threshold = 60; // px
+  const threshold = 250; // px
 
   const handleTouchStart = (e) => {
     setTouchEndY(null);
