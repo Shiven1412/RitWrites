@@ -246,10 +246,10 @@
 }
 
 @media (max-width: 768px) {
-    .rotating-cube-container {
+.rotating-cube-container {
   position: relative;
-  width: 280px;
-  height: 280px;
+  width: 200px;
+  height: 380px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -258,12 +258,12 @@
   user-select: none;
 }
   .rotating-cube {
-    width: 280px !important;
-    height: 280px !important;
+    width: 220px !important;
+    height: 220px !important;
   }
 
   .rotating-cube-face {
-    padding: 0.5rem;
+    padding: 0.1rem;
   }
 
   .cube-face-image {
@@ -271,24 +271,28 @@
   }
 
   .cube-face-text h3 {
-    font-size: 1.25rem;
+    font-size: 1.05rem;
   }
 
   .cube-face-text p {
-    font-size: 0.75rem;
+    font-size: 0.5rem;
   }
 
   .rotating-cube-face h3 {
-    font-size: 1.25rem;
+    font-size: 1.05rem;
   }
 
   .skill-item,
   .contact-item {
-    font-size: 0.75rem;
+    font-size: 0.6rem;
     padding: 0.5rem;
   }
 
   .cube-face-quote {
-    font-size: 0.875rem;
+    font-size: 0.8rem;
   }
+ .hero-cube {
+            min-height: 437px;
+            width: 321px;
+        }
 }

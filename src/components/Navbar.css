@@ -49,7 +49,7 @@
   display: none;
   background: transparent;
   border: 2px solid transparent;
-  color: var(--foreground);
+  color: whitesmoke;
   font-size: 1.25rem;
   padding: 0.35rem 0.5rem;
   border-radius: 0.35rem;
@@ -58,7 +58,7 @@
 }
 
 .mobile-toggle:hover {
-  background-color: #87ceeb;
+  background-color: #ffffff00;
 }
 
 @media (max-width: 768px) {
@@ -67,7 +67,7 @@
     align-items: center;
     justify-content: center;
   }
-}
+
 
 .mobile-menu {
   position: absolute;
@@ -86,7 +86,7 @@
 
 .mobile-menu .nav-link,
 .mobile-menu .nav-button {
-  color: var(--foreground);
+  color: whitesmoke;
   text-decoration: none;
   background: transparent;
   border: none;
@@ -99,7 +99,7 @@
 }
 
 .mobile-menu .nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgb(212, 189, 189);
   color: var(--foreground);
 }
 
@@ -119,7 +119,7 @@
 .nav-button {
   font-size: 0.95rem;
   padding: 0.65rem 1.25rem;
-  background: rgba(255,255,255,0.95);
+  background: rgb(255, 255, 255);
   border-radius: 999px;
   color: var(--cta-text-dark);
   font-weight: var(--font-weight-medium);
@@ -141,7 +141,7 @@
   font-weight: var(--font-weight-medium);
   font-size: 0.95rem;
 }
-
+}
 @media (max-width: 768px) {
   .navbar {
     padding: 1rem;
