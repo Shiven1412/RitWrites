@@ -1,11 +1,12 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
+  /* Overrides to harmonize with index.css playful theme */
   :root{
-    --color-bg: #fafafa;
-    --color-text: #333333;
-    --color-primary: #191970;
-    --color-accent: #d4af37;
+    --color-bg: var(--background);
+    --color-text: var(--foreground);
+    --color-primary: var(--primary);
+    --color-accent: var(--accent);
     --container-max: 72rem;
     --gap: 1rem;
   }
@@ -22,13 +23,11 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: var(--color-bg);
-    color: var(--color-text);
+    background-color: var(--background); 
+    color: var(--foreground);
     font-size: 1rem;
     line-height: 1.6;
     font-weight: 400;
@@ -41,7 +40,7 @@ const GlobalStyles = createGlobalStyle`
 
   a {
     text-decoration: none;
-    color: inherit;
+    color: var(--primary);
   }
 
   button {
@@ -55,28 +54,34 @@ const GlobalStyles = createGlobalStyle`
   input, textarea {
     font-family: inherit;
     font-size: 1rem;
+    background-color: var(--input-background);
+    color: var(--foreground);
+    border: 1px solid var(--border);
   }
 
   h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading); /* Using DM Serif Display */
+    font-style: italic;
     line-height: 1.3;
-    font-weight: 600;
-    color: var(--color-primary);
+    font-weight: 400;
+    color: var(--foreground); /* Dark text color */
   }
 
   h1 {
-    font-size: 2rem;
+    font-size: 3.5rem;
   }
 
   h2 {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
   }
 
   h3 {
-    font-size: 1.25rem;
+    font-size: 1.8rem;
   }
 
   p {
     font-weight: 400;
+    color: var(--foreground);
   }
 
   /* Responsive tweaks */
@@ -86,9 +91,9 @@ const GlobalStyles = createGlobalStyle`
 
   @media (max-width: 768px) {
     body { font-size: 0.95rem; }
-    h1 { font-size: 1.5rem; }
-    h2 { font-size: 1.125rem; }
-    h3 { font-size: 1rem; }
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 1.8rem; }
+    h3 { font-size: 1.4rem; }
   }
 `;
 

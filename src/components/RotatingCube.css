@@ -14,8 +14,8 @@
   content: '';
   position: absolute;
   inset: -60px;
-  border-radius: 2rem;
-  background: radial-gradient(closest-side, rgba(124,58,237,0.14), rgba(236,72,153,0.06), transparent 60%);
+  /* Updated gradient/blur for black background */
+  background: radial-gradient(closest-side, rgba(138, 43, 226, 0.14), rgba(255, 0, 127, 0.06), transparent 60%);
   filter: blur(48px);
   z-index: 0;
   pointer-events: none;
@@ -49,13 +49,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 30px 80px rgba(8, 6, 20, 0.45), inset 0 1px 0 rgba(255,255,255,0.02);
+  /* Darker shadow for black background */
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255,255,255,0.02);
   text-align: center;
 }
 
 /* Front Face - Profile Photo */
 .front-face {
-  background: linear-gradient(135deg, color-mix(in oklab, var(--color-black) 85%, transparent 0%), color-mix(in oklab, var(--color-black) 75%, transparent 30%));
+  /* Darker background for overlay/text visibility */
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.75));
   position: relative;
   overflow: hidden;
 }
@@ -75,14 +77,14 @@
 .cube-face-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(3,6,23,0.72), rgba(3,6,23,0.18) 30%, transparent 60%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.18) 30%, transparent 60%);
   display: flex;
   align-items: flex-end;
   padding: 1.5rem;
 }
 
 .cube-face-text {
-  color: white;
+  color: var(--foreground);
   text-align: left;
 }
 
@@ -90,18 +92,20 @@
   font-size: 1.5rem;
   font-weight: 700;
   margin: 0;
+  color: var(--foreground);
 }
 
 .cube-face-text p {
   font-size: 0.875rem;
   opacity: 0.9;
   margin: 0.25rem 0 0 0;
+  color: var(--muted-foreground);
 }
 
-/* Back Face - Skills */
+/* Back Face - Skills (Primary Theme Colors) */
 .back-face {
-  background: linear-gradient(135deg, var(--color-cyan-500, #06b6d4) 0%, var(--color-teal-500, #14b8a6) 50%, var(--color-blue-500, #3b82f6) 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--color-cyan-500) 0%, var(--color-teal-500) 50%, var(--primary) 100%);
+  color: var(--foreground);
 }
 
 .back-face h3 {
@@ -109,6 +113,7 @@
   font-weight: 700;
   margin-bottom: 1rem;
   width: 100%;
+  color: var(--foreground);
 }
 
 .cube-face-content {
@@ -123,12 +128,13 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  color: white;
-  background: rgba(255, 255, 255, 0.2);
+  color: var(--foreground);
+  background: rgba(255, 255, 255, 0.15); /* Semi-transparent white */
   backdrop-filter: blur(4px);
   border-radius: 0.5rem;
   padding: 0.75rem;
   font-size: 0.875rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .skill-item span,
@@ -137,16 +143,17 @@
   text-align: left;
 }
 
-/* Right Face - About */
+/* Right Face - About (Accent Theme Colors) */
 .right-face {
-  background: linear-gradient(135deg, var(--color-purple-500) 0%, var(--color-pink-500) 50%, var(--color-rose-500) 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--color-rose-500) 50%, var(--primary) 100%);
+  color: var(--foreground);
 }
 
 .right-face h3 {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
+  color: var(--foreground);
 }
 
 .cube-face-text-content {
@@ -155,10 +162,10 @@
   opacity: 0.95;
 }
 
-/* Left Face - Contact */
+/* Left Face - Contact (Primary/Accent Mix) */
 .left-face {
-  background: linear-gradient(135deg, var(--color-indigo-500) 0%, var(--color-purple-500) 50%, var(--color-pink-500) 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--color-indigo-500) 0%, var(--primary) 50%, var(--accent) 100%);
+  color: var(--foreground);
 }
 
 .left-face h3 {
@@ -166,6 +173,7 @@
   font-weight: 700;
   margin-bottom: 1rem;
   width: 100%;
+  color: var(--foreground);
 }
 
 .contact-item {
@@ -174,8 +182,8 @@
 
 /* Top Face */
 .top-face {
-  background: linear-gradient(135deg, var(--color-emerald-500) 0%, var(--color-green-500, #22c55e) 50%, var(--color-lime-500) 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--color-emerald-500) 0%, var(--color-green-500) 50%, var(--color-lime-500) 100%);
+  color: var(--foreground);
 }
 
 .cube-face-center {
@@ -186,6 +194,7 @@
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
+  color: var(--foreground);
 }
 
 .cube-face-icons {
@@ -197,8 +206,8 @@
 
 /* Bottom Face */
 .bottom-face {
-  background: linear-gradient(135deg, var(--color-rose-500) 0%, var(--color-fuchsia-500, #d946ef) 50%, var(--color-violet-500, #8b5cf6) 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--color-rose-500) 0%, var(--color-fuchsia-500) 50%, var(--color-violet-500) 100%);
+  color: var(--foreground);
 }
 
 .cube-face-quote {
@@ -218,7 +227,7 @@
 /* Face Indicator Dots */
 .cube-face-indicator {
   position: absolute;
-  bottom: -9.5rem;
+  bottom: -4rem; 
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -237,33 +246,27 @@
 }
 
 .indicator-dot:hover {
-  background-color: rgba(136, 0, 149, 0.901);
+  background-color: var(--primary);
 }
 
 .indicator-dot.active {
-  background-color: rgb(181, 134, 134);
+  background-color: var(--accent);
   width: 1.8rem;
 }
 
 @media (max-width: 768px) {
-.rotating-cube-container {
-  position: relative;
-  width: 200px;
-  height: 380px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  perspective: 1200px;
-  cursor: grab;
-  user-select: none;
-}
+  .rotating-cube-container {
+    width: 280px;
+    height: 280px;
+    perspective: 1200px;
+  }
   .rotating-cube {
-    width: 220px !important;
-    height: 220px !important;
+    width: 100% !important;
+    height: 100% !important;
   }
 
   .rotating-cube-face {
-    padding: 0.1rem;
+    padding: 0.5rem;
   }
 
   .cube-face-image {
@@ -271,28 +274,29 @@
   }
 
   .cube-face-text h3 {
-    font-size: 1.05rem;
+    font-size: 1.25rem;
   }
 
   .cube-face-text p {
-    font-size: 0.5rem;
+    font-size: 0.75rem;
   }
 
   .rotating-cube-face h3 {
-    font-size: 1.05rem;
+    font-size: 1.25rem;
   }
 
   .skill-item,
   .contact-item {
-    font-size: 0.6rem;
+    font-size: 0.75rem;
     padding: 0.5rem;
   }
 
   .cube-face-quote {
-    font-size: 0.8rem;
+    font-size: 0.875rem;
   }
- .hero-cube {
-            min-height: 437px;
-            width: 321px;
-        }
+  
+  .hero-cube {
+    min-height: 300px; 
+    width: auto;
+  }
 }

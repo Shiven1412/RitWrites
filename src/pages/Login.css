@@ -3,15 +3,17 @@
   margin: 2rem auto;
   padding: 2rem;
   background-color: var(--card);
-  border: 1px solid var(--border);
+  border: 2px solid var(--color-text-dark);
   border-radius: var(--radius);
-  box-shadow: 0 4px 12px rgba(3, 2, 19, 0.08);
+  box-shadow: 4px 4px 0 var(--color-pink-primary);
 }
 
 .login-title {
   font-size: 2rem;
-  font-weight: 700;
-  color: var(--primary);
+  font-weight: 400;
+  font-family: var(--font-heading);
+  font-style: italic;
+  color: var(--foreground);
   margin-bottom: 1rem;
 }
 
@@ -31,11 +33,11 @@
 .login-input {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid var(--border);
+  border: 2px solid var(--color-text-dark);
   border-radius: calc(var(--radius) - 0.25rem);
   font-size: 1rem;
-  background-color: var(--card);
-  color: var(--primary);
+  background-color: var(--input-background);
+  color: var(--foreground);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
@@ -45,8 +47,8 @@
 
 .login-input:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(233, 235, 239, 0.5);
+  border-color: var(--color-pink-primary);
+  box-shadow: 0 0 0 3px var(--color-green-accent);
 }
 
 .login-button-group {
@@ -57,22 +59,24 @@
 .login-button {
   flex: 1;
   padding: 0.75rem 1rem;
-  background-color: var(--primary);
-  color: var(--card);
-  border: 1px solid var(--primary);
+  background-color: var(--color-green-accent);
+  color: var(--cta-text-dark);
+  border: 2px solid var(--color-text-dark);
   border-radius: calc(var(--radius) - 0.25rem);
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.2s;
+  box-shadow: 3px 3px 0 var(--color-text-dark);
+  text-transform: uppercase;
 }
 
 .login-button:hover {
-  background-color: var(--accent);
-  border-color: var(--accent);
-  color: var(--primary);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(233, 235, 239, 0.3);
+  background-color: var(--color-pink-primary);
+  border-color: var(--color-text-dark);
+  color: var(--primary-foreground);
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--color-text-dark);
 }
 
 .login-button:active {

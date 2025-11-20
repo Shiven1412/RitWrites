@@ -8,14 +8,16 @@
 
 .contact-title {
   font-size: 2.5rem;
-  font-weight: bold;
-  color: #ffffff;
+  font-weight: 400;
+  font-family: var(--font-heading);
+  font-style: italic;
+  color: var(--foreground);
   margin-bottom: 1rem;
 }
 
 .contact-description {
   margin-top: 1rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--muted-foreground);
   font-size: 1.1rem;
   line-height: 1.6;
 }
@@ -31,25 +33,26 @@
 .contact-textarea {
   width: 100%;
   padding: 0.75rem;
-  border: 2px solid var(--primary);
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  background-color: var(--card);
-  color: var(--primary);
+  background-color: var(--input-background);
+  color: var(--foreground);
   font-family: inherit;
+  border: 2px solid var(--color-text-dark);
 }
 
 .contact-input::placeholder,
 .contact-textarea::placeholder {
-  color: #cccccc;
+  color: var(--muted-foreground);
 }
 
 .contact-input:focus,
 .contact-textarea:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(233, 235, 239, 0.3);
+  border-color: var(--color-pink-primary);
+  box-shadow: 3px 3px 0 var(--color-pink-primary);
 }
 
 .contact-textarea {
@@ -59,21 +62,24 @@
 
 .contact-button {
   padding: 0.75rem 1rem;
-  background-color: var(--primary);
-  color: var(--card);
+  background-color: var(--color-green-accent);
+  color: var(--cta-text-dark);
   border-radius: 0.5rem;
   font-weight: 600;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 2px solid var(--primary);
+  border: 2px solid var(--color-text-dark);
+  box-shadow: 4px 4px 0 var(--color-text-dark);
   align-self: flex-start;
   cursor: pointer;
+  text-transform: uppercase;
 }
 
 .contact-button:hover:not(:disabled) {
-  background-color: #0a0a3a;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(3, 2, 19, 0.3);
+  background-color: var(--color-pink-primary);
+  box-shadow: 2px 2px 0 var(--color-text-dark);
+  transform: translate(2px, 2px);
+  color: var(--primary-foreground);
 }
 
 .contact-button:active:not(:disabled) {
@@ -81,8 +87,9 @@
 }
 
 .contact-button:disabled {
-  background-color: #cccccc;
+  background-color: var(--muted-foreground);
   cursor: not-allowed;
+  box-shadow: 4px 4px 0 var(--muted-foreground);
 }
 
 .contact-message {
@@ -142,4 +149,3 @@
     font-size: 0.9rem;
   }
 }
-

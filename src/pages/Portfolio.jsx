@@ -13,9 +13,10 @@ export default function Portfolio() {
   async function fetchProjects() {
     setLoading(true);
     try {
+      // Ensure image_url is fetched
       const { data } = await supabase
         .from('portfolio')
-        .select('*')
+        .select('id, title, description, link, image_url')
         .order('created_at', { ascending: false });
       setProjects(data || []);
     } catch (err) {
@@ -57,7 +58,7 @@ export default function Portfolio() {
               {p.image_url ? (
                 <img src={p.image_url} alt={p.title} />
               ) : (
-                <div className="no-image-placeholder">🎨</div>
+                <div className="no-image-placeholder">📝</div>
               )}
             </div>
             <div className="project-content">

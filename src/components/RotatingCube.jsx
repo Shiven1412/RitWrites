@@ -171,9 +171,10 @@ export function RotatingCube({ profileImage }) {
   };
 
   // cubeSize controls visual size; translateZ for faces should be half of this
-  // keep this in sync with .rotating-cube-container dimensions in CSS (320px)
+  // Adding 2px overlap (320/2 - 2 = 158) to eliminate gaps between faces.
   const cubeSize = 320;
-  const half = Math.round(cubeSize / 2);
+  const overlap = 2;
+  const half = Math.round(cubeSize / 2) - overlap;
 
   return (
     <div

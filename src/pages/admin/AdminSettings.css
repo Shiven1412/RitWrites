@@ -6,8 +6,10 @@
 
 .admin-settings-title {
   font-size: 2rem;
-  font-weight: 600;
-  color: var(--primary);
+  font-weight: 400;
+  font-family: var(--font-heading);
+  font-style: italic;
+  color: var(--foreground);
   margin-bottom: 1.5rem;
 }
 
@@ -27,25 +29,26 @@
 
 .admin-settings-message-error {
   background-color: #fee2e2;
-  color: #dc2626;
-  border-color: #dc2626;
+  color: var(--destructive);
+  border-color: var(--destructive);
 }
 
 .admin-settings-section {
   background-color: var(--card);
-  border: 1px solid var(--border);
+  border: 2px solid var(--color-text-dark);
   border-radius: var(--radius);
   padding: 1.5rem;
   margin-bottom: 1.5rem;
+  box-shadow: 4px 4px 0 var(--color-pink-primary);
 }
 
 .admin-settings-section-title {
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--primary);
+  color: var(--foreground);
   margin-bottom: 1rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px dashed var(--border);
 }
 
 .admin-settings-form-group {
@@ -56,19 +59,19 @@
   display: block;
   font-size: 0.95rem;
   font-weight: 500;
-  color: var(--primary);
+  color: var(--foreground);
   margin-bottom: 0.5rem;
 }
 
 .admin-settings-input {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid var(--border);
+  border: 2px solid var(--color-text-dark);
   border-radius: calc(var(--radius) - 0.25rem);
   font-size: 1rem;
   transition: border-color 0.2s, box-shadow 0.2s;
-  background-color: var(--card);
-  color: var(--primary);
+  background-color: var(--input-background);
+  color: var(--foreground);
 }
 
 .admin-settings-input::placeholder {
@@ -77,14 +80,14 @@
 
 .admin-settings-input:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(233, 235, 239, 0.5);
+  border-color: var(--color-pink-primary);
+  box-shadow: 3px 3px 0 var(--color-green-accent);
 }
 
 .admin-settings-logo-preview {
   margin-top: 1rem;
   padding: 1rem;
-  border: 2px dashed var(--border);
+  border: 2px dashed var(--color-text-dark);
   border-radius: calc(var(--radius) - 0.25rem);
   text-align: center;
   background-color: var(--muted);
@@ -108,22 +111,22 @@
 .admin-settings-upload-button {
   margin-top: 1rem;
   padding: 0.75rem 1.5rem;
-  background-color: var(--primary);
-  color: var(--card);
+  background-color: var(--color-pink-primary);
+  color: var(--primary-foreground);
   border-radius: calc(var(--radius) - 0.25rem);
   font-weight: 600;
   font-size: 0.95rem;
   transition: all 0.2s;
-  border: 1px solid var(--primary);
+  border: 2px solid var(--color-text-dark);
   cursor: pointer;
+  box-shadow: 3px 3px 0 var(--color-text-dark);
 }
 
 .admin-settings-upload-button:hover {
-  background-color: var(--accent);
-  border-color: var(--accent);
-  color: var(--primary);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(233, 235, 239, 0.3);
+  background-color: var(--color-green-accent);
+  color: var(--cta-text-dark);
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--color-text-dark);
 }
 
 .admin-settings-file-input {
@@ -132,19 +135,22 @@
 
 .admin-settings-save-button {
   padding: 0.75rem 1.5rem;
-  background-color: #16a34a;
-  color: white;
+  background-color: var(--color-green-accent);
+  color: var(--cta-text-dark);
   border-radius: calc(var(--radius) - 0.25rem);
   font-weight: 600;
   font-size: 1rem;
-  border: none;
+  border: 2px solid var(--color-text-dark);
   cursor: pointer;
   transition: all 0.2s;
+  box-shadow: 4px 4px 0 var(--color-text-dark);
 }
 
 .admin-settings-save-button:hover {
-  background-color: #15803d;
-  transform: translateY(-2px);
+  background-color: var(--color-pink-primary);
+  color: var(--primary-foreground);
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--color-text-dark);
 }
 
 .admin-settings-save-button:disabled {

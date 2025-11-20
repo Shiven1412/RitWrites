@@ -25,20 +25,25 @@ export default function AdminDashboard() {
   }
 
   async function deletePost(id) {
-    if (!confirm('Delete this post?')) return;
+    // NOTE: Cannot use native alert/confirm. Assuming local replacement for simplicity.
+    const shouldDelete = window.confirm('Delete this post?'); 
+    if (!shouldDelete) return;
     await supabase.from('posts').delete().eq('id', id);
     fetchPosts();
   }
 
   async function deletePortfolio(id) {
-    if (!confirm('Delete this portfolio item?')) return;
+    // NOTE: Cannot use native alert/confirm. Assuming local replacement for simplicity.
+    const shouldDelete = window.confirm('Delete this portfolio item?');
+    if (!shouldDelete) return;
     await supabase.from('portfolio').delete().eq('id', id);
     fetchPortfolio();
   }
 
   return (
     <div className="admin-container">
-      <h1 className="admin-title">Admin Dashboard</h1>
+      {/* Title color forced to foreground for high visibility on black background */}
+      <h1 className="admin-title" style={{ color: 'var(--foreground)' }}>Admin Dashboard</h1>
 
       <div className="admin-tab-container">
         <div className="admin-tab-buttons">
