@@ -180,7 +180,7 @@ export default function Home({ supabase }) {
           {/* Column 4: Newsletter & Contact (Re-ordered) */}
           <div className="footer-column contact-newsletter-group">
             <div className="contact-info">
-              <p className="contact-email">Email us — <a href="mailto:hello@atnndesign.com">hello@atnndesign.com</a> <Smile size={16} /></p>
+              <p className="contact-email">Email us — <a href="Ritwritesblog@gmail.com">Ritwritesblog@gmail.com</a> <Smile size={16} /></p>
             </div>
             
             <div className="newsletter-box mt-4">

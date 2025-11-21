@@ -531,7 +531,7 @@
 }
 
 .footer-logo-graphic p {
-    font-size: 20vw; /* Massive size */
+    font-size: 5vw; /* Massive size */
     font-family: var(--font-heading);
     font-style: italic;
     color: transparent;
