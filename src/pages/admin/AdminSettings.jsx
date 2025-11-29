@@ -5,10 +5,16 @@ import './AdminSettings.css';
 
 export default function AdminSettings({ profile }) {
   const navigate = useNavigate();
-  const [settings, setSettings] = useState({ site_name: '', site_description: '', logo_url: '' });
+  const [settings, setSettings] = useState({ 
+    site_name: '', 
+    site_description: '', 
+    logo_url: '',
+    hero_image_url: '', // New state field for the hero image
+  });
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState(null);
-  const fileInputRef = useRef(null);
+  const logoFileInputRef = useRef(null);
+  const heroFileInputRef = useRef(null); // Ref for the new hero image input
 
   useEffect(() => {
     if (!profile?.is_admin) navigate('/');
@@ -16,22 +22,23 @@ export default function AdminSettings({ profile }) {
   }, [profile, navigate]);
 
   async function loadSettings() {
-    const { data } = await supabase.from('site_settings').select('*').single();
+    // Fetch the new hero_image_url field
+    const { data } = await supabase.from('site_settings').select('*').single().catch(() => ({ data: null }));
     if (data) {
       setSettings(data);
     }
   }
 
-  const onClickUpload = () => {
-    fileInputRef.current?.click();
+  const handleUploadClick = (ref) => {
+    ref.current?.click();
   };
 
-  const onImageChange = async (e) => {
+  const handleImageChange = (fileRef, storageBucket, settingsKey, filePathPrefix) => async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 2 * 1024 * 1024) {
-      setStatus({ type: 'error', message: 'Logo too big (>2MB).' });
+    if (file.size > 4 * 1024 * 1024) { // Max 4MB for hero image
+      setStatus({ type: 'error', message: `${settingsKey} too big (>4MB).` });
       return;
     }
 
@@ -42,36 +49,34 @@ export default function AdminSettings({ profile }) {
 
     try {
       const ext = file.name.split('.').pop();
-      const fileName = `logo.${ext}`;
-      const filePath = `logos/${fileName}`;
+      const fileName = `${filePathPrefix}.${ext}`;
+      const filePath = `${filePathPrefix}/${fileName}`;
 
-      // Delete old logo if it exists
-      const oldLogoPath = settings.logo_url?.split('/').pop();
-      if (oldLogoPath && oldLogoPath !== 'logo.png') {
-        await supabase.storage
-          .from('ritwrites-images')
-          .remove([`logos/${oldLogoPath}`])
-          .catch(() => {}); // Ignore errors
-      }
-
+      // Upload the new file, upserting if it exists
       const { error: uploadError } = await supabase.storage
-        .from('ritwrites-images')
+        .from(storageBucket)
         .upload(filePath, file, { upsert: true });
 
       if (uploadError) throw uploadError;
 
       const { data: publicUrlData } = supabase.storage
-        .from('ritwrites-images')
+        .from(storageBucket)
         .getPublicUrl(filePath);
 
-      setSettings(prev => ({ ...prev, logo_url: publicUrlData.publicUrl }));
-      setStatus({ type: 'success', message: 'Logo uploaded successfully!' });
+      if (!publicUrlData?.publicUrl) {
+        setStatus({ type: 'error', message: 'Failed to get image URL' });
+        return;
+      }
+
+      setSettings(prev => ({ ...prev, [settingsKey]: publicUrlData.publicUrl }));
+      setStatus({ type: 'success', message: `${settingsKey} uploaded successfully!` });
       setTimeout(() => setStatus(null), 3000);
     } catch (err) {
       console.error('Upload error:', err);
       setStatus({ type: 'error', message: `Upload failed: ${err.message}` });
     }
   };
+
 
   const save = async () => {
     if (!settings.site_name.trim()) {
@@ -86,8 +91,10 @@ export default function AdminSettings({ profile }) {
       const { data: existing } = await supabase.from('site_settings').select('id').single().catch(() => ({ data: null }));
 
       if (existing) {
+        // Update existing row
         await supabase.from('site_settings').update(settings).eq('id', existing.id);
       } else {
+        // Insert new row
         await supabase.from('site_settings').insert([settings]);
       }
 
@@ -133,9 +140,9 @@ export default function AdminSettings({ profile }) {
         </div>
       </div>
 
+      {/* --- Logo Section --- */}
       <div className="admin-settings-section">
         <h2 className="admin-settings-section-title">🎨 Logo</h2>
-
         <div className="admin-settings-form-group">
           <label className="admin-settings-label">Logo Image</label>
           <div className="admin-settings-logo-preview">
@@ -145,18 +152,44 @@ export default function AdminSettings({ profile }) {
               <p className="admin-settings-logo-placeholder">No logo uploaded yet</p>
             )}
           </div>
-          <button className="admin-settings-upload-button" onClick={onClickUpload}>
+          <button className="admin-settings-upload-button" onClick={() => handleUploadClick(logoFileInputRef)}>
             📤 Upload Logo
           </button>
           <input
             className="admin-settings-file-input"
-            ref={fileInputRef}
+            ref={logoFileInputRef}
             type="file"
             accept="image/*"
-            onChange={onImageChange}
+            onChange={handleImageChange(logoFileInputRef, 'ritwrites-images', 'logo_url', 'logos/ritwrites-logo')}
           />
         </div>
       </div>
+
+      {/* --- Hero Image Section (NEW) --- */}
+      <div className="admin-settings-section">
+        <h2 className="admin-settings-section-title">👩‍💻 Hero Profile Image (Home Page)</h2>
+        <div className="admin-settings-form-group">
+          <label className="admin-settings-label">Profile Image</label>
+          <div className="admin-settings-logo-preview admin-settings-hero-preview">
+            {settings.hero_image_url ? (
+              <img src={settings.hero_image_url} alt="Hero Profile" style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '50%' }} />
+            ) : (
+              <p className="admin-settings-logo-placeholder">No hero image uploaded yet</p>
+            )}
+          </div>
+          <button className="admin-settings-upload-button" onClick={() => handleUploadClick(heroFileInputRef)}>
+            📤 Upload Profile Image
+          </button>
+          <input
+            className="admin-settings-file-input"
+            ref={heroFileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange(heroFileInputRef, 'ritwrites-images', 'hero_image_url', 'profiles/ritika')}
+          />
+        </div>
+      </div>
+
 
       <button className="admin-settings-save-button" onClick={save} disabled={saving}>
         {saving ? 'Saving...' : 'Save Settings'}

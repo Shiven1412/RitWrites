@@ -32,12 +32,15 @@ export default function App() {
       setSession(sess?.user || null);
       if (sess?.user) fetchProfile(sess.user.id);
       else setProfile(null);
+      // Re-fetch site settings on auth change (in case settings were saved)
+      fetchSiteSettings();
     });
     return () => listener.subscription.unsubscribe();
   }, []);
 
   async function fetchSiteSettings() {
     const { data } = await supabase.from('site_settings').select('*').single().catch(() => ({ data: null }));
+    // siteSettings now contains hero_image_url
     setSiteSettings(data);
   }
 
@@ -69,20 +72,22 @@ export default function App() {
     <Router>
       <div className="app-container">
         <Navbar user={session} profile={profile} siteSettings={siteSettings} />
-        <RouteWrapper supabase={supabase} session={session} profile={profile} />
+        {/* Pass siteSettings to RouteWrapper so Home can access it */}
+        <RouteWrapper supabase={supabase} session={session} profile={profile} siteSettings={siteSettings} />
       </div>
     </Router>
   );
 }
 
-function RouteWrapper({ supabase, session, profile }) {
+function RouteWrapper({ supabase, session, profile, siteSettings }) {
   const location = useLocation();
 
   return (
     <PageTransition pageKey={location.pathname} transitionType="flip">
       <Routes>
-        <Route path="/" element={<Home supabase={supabase} />} />
-  <Route path="/blog" element={<Blog supabase={supabase} />} />
+        {/* Pass siteSettings to Home */}
+        <Route path="/" element={<Home supabase={supabase} siteSettings={siteSettings} />} />
+        <Route path="/blog" element={<Blog supabase={supabase} />} />
         <Route path="/post/:slug" element={<PostPage supabase={supabase} user={session} />} />
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/contact" element={<Contact />} />

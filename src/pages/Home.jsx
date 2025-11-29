@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
-import profilePhoto from '../assets/photo_2025-11-15_15-27-49.jpg';
+// Import the static photo as a fallback in case siteSettings is still loading or empty
+import staticProfilePhoto from '../assets/photo_2025-11-15_15-27-49.jpg';
 import './Home.css';
 import { Smile, Send, CheckCircle } from 'lucide-react';
 import { CurvyText } from '../components/CurvyText';
 
-export default function Home({ supabase }) {
+// Receive siteSettings as a prop
+export default function Home({ supabase, siteSettings }) { 
   const navigate = useNavigate();
   const [latestProjects, setLatestProjects] = useState([]);
   const [latestPosts, setLatestPosts] = useState([]);
+
+  // Determine the image source: dynamic URL first, then static fallback
+  const heroImageSrc = siteSettings?.hero_image_url || staticProfilePhoto;
 
   useEffect(() => {
     fetchData();
@@ -57,7 +62,8 @@ export default function Home({ supabase }) {
         
         <div className="hero-visuals">
           <div className="image-placeholder">
-            <img src={profilePhoto} alt="Ritika Bisht" />
+            {/* USE DYNAMIC IMAGE SOURCE HERE */}
+            <img src={heroImageSrc} alt="Ritika Bisht Profile" />
           </div>
           <div className="floating-element one"><Smile size={32} strokeWidth={1} color="var(--color-text-dark)" /></div>
           <div className="floating-element two"><Smile size={24} strokeWidth={1} color="var(--color-text-dark)" /></div>
@@ -73,7 +79,7 @@ export default function Home({ supabase }) {
         <div className="services-welcome">
           <h2 className="section-title-script">My Creative Space</h2>
           <h3 className="section-title-curvy">The Content Workshop</h3>
-          {/* <div className="flower-icon">📝</div> */}
+          <div className="flower-icon">📝</div>
         </div>
         
         <p className="services-description">
@@ -142,14 +148,14 @@ export default function Home({ supabase }) {
         <Link to="/blog" className="cta secondary shop-btn">Read All Articles</Link>
       </section>
 
-      {/* 5. Large Footer (Fixed Layout) */}
+      {/* 5. Large Footer */}
       <footer className="footer-section">
         <div className="footer-links-group">
           {/* Column 1: For Clients (Content Writer Focus) */}
           <div className="footer-column">
             <h3>(For Clients)</h3>
             <Link to="/contact">Work with Me</Link>
-            <a href="#">Article Samples</a>
+            <a href="#">Portfolio Samples</a>
             <a href="#">About Ritika</a>
             <a href="#">Project Inquiry</a>
             <a href="#">Article Writing</a>
@@ -160,27 +166,27 @@ export default function Home({ supabase }) {
           {/* Column 2: For Creatives (Relevant to Writing/Blogging) */}
           <div className="footer-column">
             <h3>(For Creatives)</h3>
-            <a href="https://drive.google.com/drive/folders/1XWTmsGGwRrUnVOU7HHAfrYnXW9tw5TMq?usp=drive_link">Writing Templates</a>
-            <a href="https://drive.google.com/drive/folders/1gbcmpfdZ2ejfF640ilDDwGNsuc0OEsQ2?usp=drive_link">Editing Guides</a>
+            <a href="#">Writing Templates</a>
+            <a href="#">Editing Guides</a>
             <Link to="/blog">Read the Blog</Link>
-            <a href="https://drive.google.com/drive/folders/1X3ZNqreDInBNgvOI-AeG4uDie7U4Jl2w?usp=drive_link">Article Samples</a>
-            <a href="/contact">Mentorship</a> 
+            <a href="#">Industry Insights</a>
+            <a href="#">Mentorship</a>
           </div>
 
           {/* Column 3: Links */}
           <div className="footer-column">
             <h3>(Links)</h3>
-            <a href="https://www.instagram.com/ritwrites">Instagram</a>
-            <a href="https://x.com/Ritwritesx">Twitter</a>
-            <a href="https://www.linkedin.com/in/ritika-bisht-8a9a79238/">LinkedIn</a>
-            <a href="https://medium.com/@ritikabish05">Medium</a>
-            <a href="/contact">Contact</a>
+            <a href="#">Instagram</a>
+            <a href="#">Twitter</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">Behance</a>
+            <a href="#">Contact</a>
           </div>
 
-          {/* Column 4: Newsletter & Contact (Re-ordered) */}
+          {/* Column 4: Newsletter & Contact */}
           <div className="footer-column contact-newsletter-group">
             <div className="contact-info">
-              <p className="contact-email">Email us — <a href="Ritwritesblog@gmail.com">Ritwritesblog@gmail.com</a> <Smile size={16} /></p>
+              <p className="contact-email">Email us — <a href="mailto:hello@atnndesign.com">hello@atnndesign.com</a> <Smile size={16} /></p>
             </div>
             
             <div className="newsletter-box mt-4">
