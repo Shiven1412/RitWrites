@@ -91,11 +91,11 @@
   right: 20px;
   background: var(--color-pink-primary);
   border: 4px solid var(--color-text-dark);
-  border-radius: 1rem;
-  padding: 1.5rem;
+  /* INCREASED PADDING to prevent overflow */
+  padding: 2rem; 
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.75rem; /* Reduced gap */
   z-index: 1100; /* Above content, below navbar */
   min-width: 250px;
   
@@ -111,7 +111,8 @@
 .mobile-menu-overlay button,
 .mobile-menu-overlay span {
   color: white;
-  font-size: 1.1rem;
+  /* REDUCED FONT SIZE for better fit */
+  font-size: 1rem; 
   font-weight: 600;
   text-align: left;
   text-transform: uppercase;
@@ -144,11 +145,11 @@
     top: 70px;
     right: 10px;
     min-width: 180px;
-    padding: 1rem;
+    padding: 1.5rem; /* Slightly reduced padding on mobile */
     gap: 0.5rem;
   }
   .mobile-menu-overlay a,
   .mobile-menu-overlay button {
-    font-size: 1rem;
+    font-size: 0.9rem; /* Further reduced size for mobile */
   }
 }

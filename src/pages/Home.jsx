@@ -73,7 +73,7 @@ export default function Home({ supabase }) {
         <div className="services-welcome">
           <h2 className="section-title-script">My Creative Space</h2>
           <h3 className="section-title-curvy">The Content Workshop</h3>
-          <div className="flower-icon">📝</div>
+          {/* <div className="flower-icon">📝</div> */}
         </div>
         
         <p className="services-description">
@@ -149,7 +149,7 @@ export default function Home({ supabase }) {
           <div className="footer-column">
             <h3>(For Clients)</h3>
             <Link to="/contact">Work with Me</Link>
-            <a href="#">Portfolio Samples</a>
+            <a href="#">Article Samples</a>
             <a href="#">About Ritika</a>
             <a href="#">Project Inquiry</a>
             <a href="#">Article Writing</a>
@@ -160,21 +160,21 @@ export default function Home({ supabase }) {
           {/* Column 2: For Creatives (Relevant to Writing/Blogging) */}
           <div className="footer-column">
             <h3>(For Creatives)</h3>
-            <a href="#">Writing Templates</a>
-            <a href="#">Editing Guides</a>
+            <a href="https://drive.google.com/drive/folders/1XWTmsGGwRrUnVOU7HHAfrYnXW9tw5TMq?usp=drive_link">Writing Templates</a>
+            <a href="https://drive.google.com/drive/folders/1gbcmpfdZ2ejfF640ilDDwGNsuc0OEsQ2?usp=drive_link">Editing Guides</a>
             <Link to="/blog">Read the Blog</Link>
-            <a href="#">Industry Insights</a>
-            <a href="#">Mentorship</a>
+            <a href="https://drive.google.com/drive/folders/1X3ZNqreDInBNgvOI-AeG4uDie7U4Jl2w?usp=drive_link">Article Samples</a>
+            <a href="/contact">Mentorship</a> 
           </div>
 
           {/* Column 3: Links */}
           <div className="footer-column">
             <h3>(Links)</h3>
-            <a href="#">Instagram</a>
-            <a href="#">Twitter</a>
-            <a href="#">LinkedIn</a>
-            <a href="#">Behance</a>
-            <a href="#">Contact</a>
+            <a href="https://www.instagram.com/ritwrites">Instagram</a>
+            <a href="https://x.com/Ritwritesx">Twitter</a>
+            <a href="https://www.linkedin.com/in/ritika-bisht-8a9a79238/">LinkedIn</a>
+            <a href="https://medium.com/@ritikabish05">Medium</a>
+            <a href="/contact">Contact</a>
           </div>
 
           {/* Column 4: Newsletter & Contact (Re-ordered) */}
