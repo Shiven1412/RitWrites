@@ -67,6 +67,22 @@ export default function Home({ supabase, siteSettings }) {
           <div className="floating-element three">hi, i'm ritika!</div>
         </div>
       </section>
+      {/* Debug: show current hero_image_url (temporary) */}
+      <div style={{ padding: '1rem', border: '1px dashed var(--color-gray)', margin: '1rem 0' }}>
+        <strong>Debug - hero_image_url:</strong>
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginTop: '0.5rem' }}>
+          <input style={{ flex: 1 }} readOnly value={siteSettings?.hero_image_url || ''} />
+          <button onClick={() => siteSettings?.hero_image_url && window.open(siteSettings.hero_image_url, '_blank')}>Open</button>
+        </div>
+        <div style={{ marginTop: '0.5rem' }}>
+          <img
+            key={siteSettings?.hero_image_url || 'fallback'}
+            src={siteSettings?.hero_image_url || profilePhoto}
+            alt="Debug hero"
+            style={{ maxWidth: '160px', maxHeight: '160px', borderRadius: '8px', marginTop: '0.5rem' }}
+          />
+        </div>
+      </div>
 
       {/* Curvy Marquee Separator 1 - Moving Text */}
       <CurvyText text="Research ☞ Proofreading ☞ Strategic Articles ☞ Journal Editing" color="var(--color-green-accent)" textColor="var(--color-text-dark)" reverse={false} />
