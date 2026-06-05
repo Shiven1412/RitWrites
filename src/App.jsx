@@ -87,15 +87,15 @@ export default function App() {
       <Router>
         <div className="app-container">
           <Navbar user={session} profile={profile} siteSettings={siteSettings} />
-          {/* Pass siteSettings to RouteWrapper so Home can access it */}
-          <RouteWrapper supabase={supabase} session={session} profile={profile} siteSettings={siteSettings} />
+          {/* Pass siteSettings and fetchSiteSettings to RouteWrapper so Home and Admin can access it */}
+          <RouteWrapper supabase={supabase} session={session} profile={profile} siteSettings={siteSettings} fetchSiteSettings={fetchSiteSettings} />
         </div>
       </Router>
     </ErrorBoundary>
   );
 }
 
-function RouteWrapper({ supabase, session, profile, siteSettings }) {
+function RouteWrapper({ supabase, session, profile, siteSettings, fetchSiteSettings }) {
   const location = useLocation();
 
   return (
