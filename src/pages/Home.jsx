@@ -211,5 +211,5 @@ export default function Home({ supabase }) {
         </div>
       </footer>
     </div>
-  );
+  
 
