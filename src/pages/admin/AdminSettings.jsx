@@ -58,10 +58,12 @@ export default function AdminSettings({ profile, onSettingsUpdate }) {
 
     try {
       if (settingsToSave.id) {
-        const { error } = await supabase.from('site_settings').update(settingsToSave).eq('id', settingsToSave.id);
+        const { data, error } = await supabase.from('site_settings').update(settingsToSave).eq('id', settingsToSave.id);
+        console.log('saveSettings update response:', { data, error });
         if (error) throw error;
       } else {
         const { data, error } = await supabase.from('site_settings').insert([settingsToSave]).select('id').single();
+        console.log('saveSettings insert response:', { data, error });
         if (error) throw error;
         setSettings(prev => ({ ...prev, id: data.id }));
       }
@@ -79,6 +81,34 @@ export default function AdminSettings({ profile, onSettingsUpdate }) {
 
   const handleUploadClick = (ref) => {
     ref.current?.click();
+  };
+
+  // Helper: create a default settings row if none exists
+  const createDefaultSettings = async () => {
+    setSaving(true);
+    setStatus(null);
+    try {
+      const defaultRow = {
+        site_name: 'RitWrites',
+        site_description: '',
+        logo_url: '',
+        hero_image_url: ''
+      };
+
+      const { data, error } = await supabase.from('site_settings').insert([defaultRow]).select('id').single();
+      console.log('createDefaultSettings response:', { data, error });
+      if (error) throw error;
+
+      setSettings(prev => ({ ...prev, ...defaultRow, id: data.id }));
+      setStatus({ type: 'success', message: 'Default settings created.' });
+      onSettingsUpdate?.();
+      setTimeout(() => setStatus(null), 3000);
+    } catch (err) {
+      console.error('Create default settings error:', err);
+      setStatus({ type: 'error', message: `Create failed: ${err.message}` });
+    } finally {
+      setSaving(false);
+    }
   };
 
   // Dedicated upload handler: Uploads file, gets URL, updates settings state immediately
@@ -116,6 +146,8 @@ export default function AdminSettings({ profile, onSettingsUpdate }) {
       const { data: publicUrlData } = supabase.storage
         .from(storageBucket)
         .getPublicUrl(filePath);
+
+      console.log('publicUrlData from storage.getPublicUrl:', publicUrlData);
 
       if (!publicUrlData?.publicUrl) {
         throw new Error('Failed to get image URL');
@@ -249,6 +281,14 @@ export default function AdminSettings({ profile, onSettingsUpdate }) {
               onClick={() => onSettingsUpdate?.()}
             >
               Refresh Home Settings
+            </button>
+            <button
+              className="admin-settings-upload-button"
+              onClick={createDefaultSettings}
+              disabled={saving}
+              style={{ background: '#2b6cb0', color: '#fff' }}
+            >
+              Create Default Settings Row
             </button>
             <button
               className="admin-settings-upload-button"
