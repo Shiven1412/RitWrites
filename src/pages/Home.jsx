@@ -49,7 +49,11 @@ export default function Home({ supabase }) {
           <p className="hero-subtitle">[MA ENGLISH, RESEARCHER, AND STRATEGIC CONTENT WRITER]</p>
           <div className="hero-ctas">
             <a className="cta primary" href="/contact">
+<<<<<<< HEAD
               Hire Me For Content 
+=======
+              Reach Out To Me For Content & Research <Send size={18} />
+>>>>>>> 56b7b20 (Initial commit)
               <span className="ml-2">↗</span>
             </a>
           </div>
@@ -210,4 +214,8 @@ export default function Home({ supabase }) {
       </footer>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 56b7b20 (Initial commit)
