@@ -39,8 +39,21 @@ export default function App() {
   }, []);
 
   async function fetchSiteSettings() {
-    const { data } = await supabase.from('site_settings').select('*').single().catch(() => ({ data: null }));
-    // siteSettings now contains hero_image_url
+    // Fetch the latest settings row (protect against multiple rows or empty table)
+    const { data, error } = await supabase
+      .from('site_settings')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (error) {
+      console.error('fetchSiteSettings error:', error);
+      setSiteSettings(null);
+      return;
+    }
+
+    console.log('fetched site_settings:', data);
     setSiteSettings(data);
   }
 
@@ -98,7 +111,7 @@ function RouteWrapper({ supabase, session, profile, siteSettings }) {
         <Route path="/admin/new" element={<ProtectedRoute profile={profile}><AdminEditor user={session} profile={profile} /></ProtectedRoute>} />
         <Route path="/admin/portfolio/new" element={<ProtectedRoute profile={profile}><PortfolioEditor profile={profile} /></ProtectedRoute>} />
         <Route path="/admin/portfolio/:id" element={<ProtectedRoute profile={profile}><PortfolioEditor profile={profile} /></ProtectedRoute>} />
-        <Route path="/admin/settings" element={<ProtectedRoute profile={profile}><AdminSettings profile={profile} /></ProtectedRoute>} />
+        <Route path="/admin/settings" element={<ProtectedRoute profile={profile}><AdminSettings profile={profile} onSettingsUpdate={fetchSiteSettings} /></ProtectedRoute>} />
       </Routes>
     </PageTransition>
   );
