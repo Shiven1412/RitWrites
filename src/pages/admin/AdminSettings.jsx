@@ -47,7 +47,10 @@ export default function AdminSettings({ profile, onSettingsUpdate }) {
     setSaving(true);
     setStatus(null);
 
-    if (!settingsToSave.site_name?.trim()) {
+    // Only require `site_name` when creating a new settings row.
+    // If the row already exists (has an id), allow saving partial updates
+    // such as updating `hero_image_url` without a `site_name` present.
+    if (!settingsToSave.site_name?.trim() && !settingsToSave.id) {
       setStatus({ type: 'error', message: 'Site name is required.' });
       setSaving(false);
       return;
