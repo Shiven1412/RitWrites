@@ -212,8 +212,4 @@ export default function Home({ supabase }) {
       </footer>
     </div>
   );
-<<<<<<< HEAD
-}
-=======
-}
->>>>>>> 56b7b20 (Initial commit)
+
