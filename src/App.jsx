@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { supabase } from './lib/supabaseClient';
 import { PageTransition } from './components/PageTransition';
 import Navbar from './components/Navbar';
+import ErrorBoundary from './components/ErrorBoundary';
 import Home from './pages/Home';
 import Blog from './pages/Blog';
 import PostPage from './pages/PostPage';
@@ -82,13 +83,15 @@ export default function App() {
   }
 
   return (
-    <Router>
-      <div className="app-container">
-        <Navbar user={session} profile={profile} siteSettings={siteSettings} />
-        {/* Pass siteSettings to RouteWrapper so Home can access it */}
-        <RouteWrapper supabase={supabase} session={session} profile={profile} siteSettings={siteSettings} />
-      </div>
-    </Router>
+    <ErrorBoundary>
+      <Router>
+        <div className="app-container">
+          <Navbar user={session} profile={profile} siteSettings={siteSettings} />
+          {/* Pass siteSettings to RouteWrapper so Home can access it */}
+          <RouteWrapper supabase={supabase} session={session} profile={profile} siteSettings={siteSettings} />
+        </div>
+      </Router>
+    </ErrorBoundary>
   );
 }
 
