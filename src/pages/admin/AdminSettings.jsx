@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseClient';
 import './AdminSettings.css';
 
-export default function AdminSettings({ profile }) {
+export default function AdminSettings({ profile, onSettingsUpdate }) {
   const navigate = useNavigate();
   const [settings, setSettings] = useState({ 
     site_name: '', 
@@ -43,37 +43,28 @@ export default function AdminSettings({ profile }) {
   }
 
   // Unified function to save all fields in the 'settings' state
-  const saveSettings = async () => {
+  const saveSettings = async (settingsToSave = settings) => {
     setSaving(true);
     setStatus(null);
 
-    // Only update fields that should be managed by the main save button
-    const dataToSave = {
-      site_name: settings.site_name,
-      site_description: settings.site_description,
-      // Note: We don't include logo_url or hero_image_url here, as they are updated
-      // immediately upon successful upload within handleImageChange, making the settings
-      // object immediately ready for the final update/insert.
-    };
+    if (!settingsToSave.site_name?.trim()) {
+      setStatus({ type: 'error', message: 'Site name is required.' });
+      setSaving(false);
+      return;
+    }
 
     try {
-      if (!settings.site_name.trim()) {
-        throw new Error('Site name is required.');
-      }
-
-      if (settings.id) {
-        // Update existing row
-        const { error } = await supabase.from('site_settings').update(settings).eq('id', settings.id);
+      if (settingsToSave.id) {
+        const { error } = await supabase.from('site_settings').update(settingsToSave).eq('id', settingsToSave.id);
         if (error) throw error;
       } else {
-        // Insert new row
-        const { data, error } = await supabase.from('site_settings').insert([settings]).select('id').single();
+        const { data, error } = await supabase.from('site_settings').insert([settingsToSave]).select('id').single();
         if (error) throw error;
-        // Update local state with the new ID
         setSettings(prev => ({ ...prev, id: data.id }));
       }
 
       setStatus({ type: 'success', message: 'Settings saved successfully!' });
+      onSettingsUpdate?.();
       setTimeout(() => setStatus(null), 3000);
     } catch (err) {
       console.error('Save error:', err);
@@ -108,14 +99,13 @@ export default function AdminSettings({ profile }) {
 
     try {
       const ext = file.name.split('.').pop();
-      // Ensure the file path is unique enough but deterministic for upsert
-      const fileName = `${filePathPrefix}.${ext}`;
-      const filePath = `${filePathPrefix}/${fileName}`;
+      const uniqueSuffix = `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+      const filePath = `${filePathPrefix}/${uniqueSuffix}.${ext}`;
 
-      // 1. Upload/Upsert the file
+      // 1. Upload the file with a unique path so repeated uploads don't all use the same name
       const { error: uploadError } = await supabase.storage
         .from(storageBucket)
-        .upload(filePath, file, { upsert: true });
+        .upload(filePath, file);
 
       if (uploadError) throw uploadError;
 
@@ -128,14 +118,14 @@ export default function AdminSettings({ profile }) {
         throw new Error('Failed to get image URL');
       }
 
-      // 3. Update local state with the new URL
-      setSettings(prev => ({ ...prev, [settingsKey]: publicUrlData.publicUrl }));
-      
-      // 4. Immediately save the entire settings object to persist the URL change
-      // Since the settings state is updated here, the URL is guaranteed to be in the database after this.
-      await saveSettings(); 
+      const updatedSettings = { ...settings, [settingsKey]: publicUrlData.publicUrl };
+      setSettings(updatedSettings);
+
+      // 4. Immediately save the new state object, not the old stale state.
+      await saveSettings(updatedSettings);
 
       setStatus({ type: 'success', message: `${settingsKey} uploaded and saved successfully!` });
+      onSettingsUpdate?.();
       setTimeout(() => setStatus(null), 3000);
 
     } catch (err) {
