@@ -228,6 +228,34 @@ export default function AdminSettings({ profile, onSettingsUpdate }) {
             onChange={handleImageChange(heroFileInputRef, 'ritwrites-images', 'hero_image_url', 'profiles/ritika')}
           />
         </div>
+
+        {/* --- Debug / Verification --- */}
+        <div className="admin-settings-section" style={{ marginTop: '1rem' }}>
+          <h3 className="admin-settings-section-title">🔎 Debug</h3>
+          <div className="admin-settings-form-group">
+            <label className="admin-settings-label">Current hero_image_url</label>
+            <input
+              className="admin-settings-input"
+              value={settings.hero_image_url || ''}
+              readOnly
+            />
+          </div>
+          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+            <button
+              className="admin-settings-upload-button"
+              onClick={() => onSettingsUpdate?.()}
+            >
+              Refresh Home Settings
+            </button>
+            <button
+              className="admin-settings-upload-button"
+              onClick={() => navigator.clipboard?.writeText(settings.hero_image_url || '')}
+              disabled={!settings.hero_image_url}
+            >
+              Copy URL
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
