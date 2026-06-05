@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
-import profilePhoto from '../assets/hero image.jpeg';
+import profilePhoto from '../assets/hero_image.jpeg';
 import './Home.css';
 import { Smile, Send, CheckCircle } from 'lucide-react';
 import { CurvyText } from '../components/CurvyText';
