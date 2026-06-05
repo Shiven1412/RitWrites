@@ -6,7 +6,7 @@ import './Home.css';
 import { Smile, Send, CheckCircle } from 'lucide-react';
 import { CurvyText } from '../components/CurvyText';
 
-export default function Home({ supabase }) {
+export default function Home({ supabase, siteSettings }) {
   const navigate = useNavigate();
   const [latestProjects, setLatestProjects] = useState([]);
   const [latestPosts, setLatestPosts] = useState([]);
@@ -49,9 +49,7 @@ export default function Home({ supabase }) {
           <p className="hero-subtitle">[MA ENGLISH, RESEARCHER, AND STRATEGIC CONTENT WRITER]</p>
           <div className="hero-ctas">
             <a className="cta primary" href="/contact">
-
-              Reach Out To Me For Content & Research 
-
+              Hire Me For Content 
               <span className="ml-2">↗</span>
             </a>
           </div>
@@ -59,7 +57,10 @@ export default function Home({ supabase }) {
         
         <div className="hero-visuals">
           <div className="image-placeholder">
-            <img src={profilePhoto} alt="Ritika Bisht" />
+            <img
+              src={siteSettings?.hero_image_url || profilePhoto}
+              alt="Ritika Bisht"
+            />
           </div>
           <div className="floating-element one"><Smile size={32} strokeWidth={1} color="var(--color-text-dark)" /></div>
           <div className="floating-element two"><Smile size={24} strokeWidth={1} color="var(--color-text-dark)" /></div>
@@ -211,6 +212,5 @@ export default function Home({ supabase }) {
         </div>
       </footer>
     </div>
-    )
-  
-
+  );
+}
